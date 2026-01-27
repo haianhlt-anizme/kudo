@@ -6,7 +6,7 @@ def extract_json(text: str) -> dict:
     if not text or not text.strip():
         raise ValueError("Empty response from LLM")
 
-    match = re.search(r'\{.*?\}', text, re.DOTALL)
+    match = re.search(r'\{.*\}', text, re.DOTALL)
     if not match:
         raise ValueError(f"No JSON found in LLM output:\n{text}")
 

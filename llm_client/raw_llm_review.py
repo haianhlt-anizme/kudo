@@ -3,7 +3,6 @@ import json
 from dotenv import load_dotenv
 from google import genai
 
-from utils import extract_json
 
 load_dotenv()
 api_key = os.getenv("GOOGLE_API_KEY")
@@ -78,13 +77,13 @@ def generate_answer(prompt: str) -> str:
     return response.text
 
 
-def review_code(code: str) -> dict:
+def review_code(code: str) -> str:
     prompt = generate_question(code)
     answer = generate_answer(prompt)
-    return extract_json(answer)
+    return answer
 
 
-def review_file(file_path: str) -> dict:
+def raw_review_file(file_path: str) -> str:
     with open(file_path, 'r', encoding='utf-8') as file:
         code = file.read()
     return review_code(code)
