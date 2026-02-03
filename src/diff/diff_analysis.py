@@ -39,6 +39,7 @@ class KudoDiff:
 
 class DiffAnalyzer:
     _repo_path: str
+    raw_diffs: List[MiniDiff]
     kudo_diffs: List[KudoDiff]
 
     def __init__(self, repo_path: str):
@@ -65,9 +66,9 @@ class DiffAnalyzer:
     def analyze_diffs(self, target_branch: str, base_branch: str) -> List[KudoDiff]:
         # Extract diffs
         diff_extractor = DiffExtractor(self._repo_path)
-        mini_diffs = diff_extractor.extract_diffs(target_branch, base_branch)
+        self.mini_diffs = diff_extractor.extract_diffs(target_branch, base_branch)
         # Expand source code context
-        self._expand_context(mini_diffs)
+        self._expand_context(self.mini_diffs)
         return self.kudo_diffs
 
     def get_source_code_context(self) -> str:
